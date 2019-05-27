@@ -1,0 +1,7 @@
+.vscode/ipch
+build/
+dist/
+emsdk/
+lib-*/
+node_modules/
+*_glue.*
