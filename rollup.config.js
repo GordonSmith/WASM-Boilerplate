@@ -5,10 +5,8 @@ import postcss from "rollup-plugin-postcss";
 
 const pkg = require("./package.json");
 
-const node_libs = ["child_process", "fs", "node-fetch", "os", "path", "semver", "safe-buffer", "tmp", "xmldom"];
-
 function external(id) {
-    return node_libs.indexOf(id) >= 0;
+    return false;
 }
 
 function globals(id) {

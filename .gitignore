@@ -4,4 +4,5 @@ dist/
 emsdk/
 lib-*/
 node_modules/
+obj/
 *_glue.*

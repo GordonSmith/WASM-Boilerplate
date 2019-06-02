@@ -7,14 +7,16 @@
   "unpkg": "dist/index.min.js",
   "types": "types/index.d.ts",
   "scripts": {
-    "preinstall": "wsl -u root -e ./cpp-preinstall.sh",
-    "postinstall": "wsl -e ./cpp-postinstall.sh",
-    "clean": "rimraf build lib-*",
+    "preinstall": "wsl -u root -e ./cpp-install-prerequisites.sh",
+    "postinstall": "wsl -e ./cpp-install-emsdk.sh",
+    "update-emsdk": "wsl -e ./cpp-update-emsdk.sh",
+    "clean": "rimraf build obj lib-* dist",
+    "build-asm": "asc ./as/index.ts -b dist/optimized.wasm -t obj/optimized.wat --sourceMap --validate --optimize",
     "build-cpp": "wsl -e ./cpp-build.sh",
     "build-ts": "tsc",
     "build-ts-es6": "tsc --module es6 --outDir ./lib-es6",
-    "build": "run-s build-cpp build-ts build-ts-es6",
-    "bundle": "cpx ./build/cpp/main/MyLib.wasm ./dist && npm run build-ts-es6 && rollup -c",
+    "build": "run-s build-asm build-cpp build-ts build-ts-es6",
+    "bundle": "npm run build-ts-es6 && rollup -c",
     "serve": "ws --open",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -24,6 +26,7 @@
     "tslib": "1.9.3"
   },
   "devDependencies": {
+    "assemblyscript": "github:AssemblyScript/assemblyscript",
     "cpx": "1.5.0",
     "local-web-server": "2.6.1",
     "npm-run-all": "4.1.5",

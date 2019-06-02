@@ -4,6 +4,7 @@ then
     git clone https://github.com/emscripten-core/emsdk.git
 fi
 cd emsdk
-git pull
+# Uncomment to update  ---
+# git pull
 ./emsdk install latest
 ./emsdk activate latest

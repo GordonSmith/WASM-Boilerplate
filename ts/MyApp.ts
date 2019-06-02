@@ -1,13 +1,18 @@
-import * as _MyLib from "../build/cpp/main/MyLib";
+import * as _cppLib from "../build/cppLib/cppLib";
 
-const MyLib = _MyLib.default || _MyLib as () => Promise<unknown>;
+const cppLib = _cppLib.default || _cppLib as () => Promise<unknown>;
 
-MyLib().then((myLib: any) => {
-    const b = new myLib.Bar(123);
+cppLib().then((cpp: any) => {
+    const b = new cpp.Bar(123);
     b.doSomething();
-    myLib.destroy(b);
+    cpp.destroy(b);
 
-    const f = new myLib.Foo();
+    const f = new cpp.Foo();
     f.setVal(200);
     console.log(f.getVal());
+});
+
+const importObject = {};
+globalThis.WebAssembly.instantiateStreaming(fetch("dist/optimized.wasm"), importObject).then(({ module, instance }) => {
+    console.log(instance.exports.add(40, 2));
 });

@@ -1,0 +1,32 @@
+PROJECT( cppLib )
+
+#  Generate Glue from IDL file  ---
+ADD_CUSTOM_COMMAND (
+    MAIN_DEPENDENCY ${CMAKE_CURRENT_SOURCE_DIR}/main.idl
+    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/main_glue.js ${CMAKE_CURRENT_BINARY_DIR}/main_glue.cpp
+    COMMAND python $ENV{EMSCRIPTEN}/tools/webidl_binder.py ${CMAKE_CURRENT_SOURCE_DIR}/main.idl ${CMAKE_CURRENT_BINARY_DIR}/main_glue
+)
+SET_PROPERTY(SOURCE main.cpp APPEND PROPERTY OBJECT_DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/main_glue.cpp)
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --post-js ${CMAKE_CURRENT_BINARY_DIR}/main_glue.js")
+#  ---  ---  ---
+
+SET ( SRCS
+    main.cpp
+)
+
+INCLUDE_DIRECTORIES (
+    ${CMAKE_CURRENT_BINARY_DIR}
+)
+
+ADD_EXECUTABLE ( cppLib
+    ${SRCS}
+)
+
+TARGET_LINK_LIBRARIES( cppLib
+)
+
+INSTALL( FILES 
+    ${CMAKE_CURRENT_BINARY_DIR}/cppLib.wasm
+    DESTINATION dist
+    COMPONENT runtime
+)
