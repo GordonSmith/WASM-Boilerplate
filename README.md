@@ -1,5 +1,5 @@
-# WASM-Boilerplate
-_Boilplate project for learning WebAssembly._
+# WASM-Boilerplate (ARCHIVED)
+_This repository was a "learning project" to find a "senesible" WASM developnent environment.  The fruits of this labour can now be found at https://github.com/hpcc-systems/hpcc-js-wasm._
 
 ## Key Technologies Used
 * CMake
